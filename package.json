@@ -1,0 +1,21 @@
+{
+  "name": "nko4-routeflags",
+  "version": "0.0.0",
+  "description": "routeFlags",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko4/routeflags.git"
+  },
+  "dependencies": {
+    "nko": "*",
+    "express": "*",
+    "socket.io": "*"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
