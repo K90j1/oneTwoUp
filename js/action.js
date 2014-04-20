@@ -44,7 +44,7 @@ webrtc.on('readyToCall', function () {
 		webrtc.joinRoom(room);
 });
 
-
+var alertString = "カメラの利用を許可してください";
 if (room) {
 	_setRoom(room);
 } else {
@@ -52,7 +52,7 @@ if (room) {
 	console.log('01 - Load championLoginForm()');
 	jQuery('form').submit(function () {
 		if(jQuery('#localVideo').attr('src') == undefined){
-			alert('Please let using your camera. Thanks :)');
+			alert(alertString);
 			return false;
 		}
 		var val = jQuery('#sessionInput').val().toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
@@ -172,11 +172,11 @@ function _setRoom(name) {
 
     jQuery('#waitingMessage').html("<div class='panel panel-warning'>" +
         "<div class='panel-heading'>" +
-        "<h2>Functionality notice.</h2></div>" +
+        "<h2>案内</h2></div>" +
         "<div class='panel-body'>" +
-        "<i class='fa fa-video-camera'></i> Please let using your camera. Thanks :)" +
-        "<br><small>if game can not start, maybe host has gone. Please " +
-        "<a href='http://routeflags.2013.nodeknockout.com/'>restart it.</a></small>" +
+        "<i class='fa fa-video-camera'></i> " + alertString +
+        "<br><small>ゲームが始まりませんか？もしかしたらホストはどこかに行ってしまったかもしれないです　" +
+        "<a href='http://routeflags.2013.nodeknockout.com/'>再スタートはこちら</a></small>" +
         "</div>" +
         "</div>");
     webrtc.mute();
