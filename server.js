@@ -1,8 +1,12 @@
 require('nko')('qQ-TD8SLnp9xar7D');
 
-var isProduction = (process.env.NODE_ENV === 'production');
+//var isProduction = (process.env.NODE_ENV === 'production');
 var http = require('http');
-var port = (isProduction ? 80 : 8000);
+//var port = (isProduction ? 80 : 8000);
+var port = Number(process.env.PORT || 5000);
+//app.listen(port, function() {
+//    console.log("Listening on " + port);
+//});
 
 //Add
 var  express = require('express');
