@@ -62,8 +62,8 @@ module.exports = app;
 
 var debug = require('debug')('my-application');
 //var app = require('../server');
-app.set('port', Number(process.env.PORT || 5000));
-
+var port = Number(process.env.PORT || 5000);
+app.set('port', port);
 var server = app.listen(app.get('port'), function() {
     debug('Express server listening on port ' + server.address().port);
 });
