@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ジェスチャーゲーム「あっち向いてホイ！！」</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="stylesheets/normalize.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="stylesheets/vendor/bootstrap.css">
+    <link rel="stylesheet" href="stylesheets/vendor/font-awesome.css">
+    <link rel="stylesheet" href="stylesheets/design.css">
+</head>
+<body>
+<!--[if lt IE 7]>
+<p class="browsehappy"><strong>対象外</strong>のブラウザです。　<a href="http://browsehappy.com/">ブラウザを更新する</a></p>
+<![endif]-->
+<!-- Add your site or application content here -->
+<div class="container  show-hands" id="workArea">
+
+</div>
+<div id="fb-root"></div>
+<div class="container" id="functionality">
+    <div class='panel panel-danger'>
+        <div class="panel-heading">
+            <h2>案内</h2></div>
+        <div class="panel-body">
+            このアプリケーションは、ビデオ通信にWebRTCを使ってるので Google chrome か Firefox 22+を利用してください
+        </div>
+    </div>
+</div>
+<!--<div id="app" class="show-hands">-->
+<!--<button id="showHands">Show Hands</button>-->
+<!--<button id="hideHands">hide Hands</button>-->
+<!--<div id="scene">-->
+<!--<div id="finger" class="cube finger">-->
+<!--<div class="face tp"></div>-->
+<!--<div class="face lt"></div>-->
+<!--<div class="face rt"></div>-->
+<!--<div class="face ft"></div>-->
+<!--<div class="face bk"></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<script src="javascripts/plugins.js"></script>
+<script src="javascripts/main.js"></script>
+<script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+<script>window.jQuery || document.write('<script src="javascripts/vendor/jquery-2.1.0.min.js"><\/script>')</script>
+<script src="javascripts/vendor/jquery-ui.js"></script>
+<script src="javascripts/vendor/modernizr-2.6.2.min.js"></script>
+<script src="javascripts/vendor/bootstrap.js"></script>
+<script src="javascripts/vendor/holder.js"></script>
+<script src="javascripts/vendor/socket.io.js"></script>
+<script src="javascripts/vendor/simplewebrtc.bundle.js"></script>
+<script src="javascripts/vendor/holder.js"></script>
+<script src="javascripts/vendor/all.js"></script>
+<script src="javascripts/vendor/base64-binary.js"></script>
+<script src="javascripts/fb_postFeed.js"></script>
+<script src="javascripts/stuffHtml.js"></script>
+<script src="//js.leapmotion.com/leap-0.5.0.js"></script>
+<script src="javascripts/action.js"></script>
+<script>
+    (function (b, o, i, l, e, r) {
+        b.GoogleAnalyticsObject = l;
+        b[l] || (b[l] =
+                function () {
+                    (b[l].q = b[l].q || []).push(arguments)
+                });
+        b[l].l = +new Date;
+        e = o.createElement(i);
+        r = o.getElementsByTagName(i)[0];
+        e.src = '//www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e, r)
+    }(window, document, 'script', 'ga'));
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');
+</script>
+</body>
+</html>
+
