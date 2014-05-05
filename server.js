@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+require('nko')('qQ-TD8SLnp9xar7D');
 
 var express = require('express');
 var path = require('path');
