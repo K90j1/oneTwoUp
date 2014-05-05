@@ -1,27 +1,21 @@
 {
-  "name": "nko4-routeflags",
-  "version": "0.0.0",
-  "description": "routeFlags",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:nko4/routeflags.git"
-  },
-  "dependencies": {
-    "socket.io": "*",
-    "express": "~4.0.0",
-    "static-favicon": "~1.0.0",
-    "morgan": "~1.0.0",
-    "cookie-parser": "~1.0.1",
-    "body-parser": "~1.0.0",
-    "debug": "~0.7.4",
-    "jade": "~1.3.0",
-    "stylus": "0.42.3"
-  },
-  "engines": {
-    "node": "0.10.x"
-  }
+    "name": "nko4-routeflags",
+    "version": "0.0.0",
+    "description": "routeFlags",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:nko4/routeflags.git"
+    },
+    "dependencies": {
+        "nko": "*",
+        "express": "*",
+        "socket.io": "*"
+    },
+    "engines": {
+        "node": "0.10.x"
+    }
 }
