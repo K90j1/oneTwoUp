@@ -1,6 +1,6 @@
 ## Quick Start
 
-# License
+## License
 Copyright 2014 routeflags.inc http://routeflags.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
