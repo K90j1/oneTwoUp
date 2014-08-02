@@ -63,6 +63,7 @@ function SimpleWebRTC(opts) {
     });
 
     connection.on('message', function (message) {
+        console.dir(message);
         var peers = self.webrtc.getPeers(message.from, message.roomType);
         var peer;
 
@@ -79,6 +80,7 @@ function SimpleWebRTC(opts) {
             peer.handleMessage(message);
         } else if (peers.length) {
             peers.forEach(function (peer) {
+                console.dir(message);
                 peer.handleMessage(message);
             });
         }
@@ -1052,6 +1054,8 @@ Peer.prototype = Object.create(WildEmitter.prototype, {
 });
 
 Peer.prototype.handleMessage = function (message) {
+    console.log(message.type);
+    console.dir(message.payload);
     var self = this;
 
     this.logger.log('getting', message.type, message);
@@ -1070,8 +1074,9 @@ Peer.prototype.handleMessage = function (message) {
         this.parent.emit('speaking', {id: message.from});
     } else if (message.type === 'stopped_speaking') {
         this.parent.emit('stopped_speaking', {id: message.from});
-    }
-};
+    } else if (message.type === 'message') {
+        this.parent.emit('message', message.payload);
+    }};
 
 Peer.prototype.send = function (messageType, payload) {
     var message = {

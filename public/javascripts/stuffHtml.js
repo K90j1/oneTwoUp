@@ -1,12 +1,13 @@
 /**
- * Created with JetBrains PhpStorm.
- * User: bookair
+ * Author: Coronet Internet Service
  * Date: 11/9/13
- * Time: 4:20 PM
- * To change this template use File | Settings | File Templates.
+ * License: Under Apache License, Version 2.0.
  */
 
-
+/**
+ * Login form for Top page
+ * @return String
+ */
 function championLoginForm(){
 	return "<div class='row'>" +
 		"<div class='page-header'>" +
@@ -21,9 +22,9 @@ function championLoginForm(){
 		"<div class='form-group'>" +
         "<label for=''>1. カメラを利用を許可してください <span class='label label-danger'>必須</span></label><br>" +
         "<label for='nickname'>2. ニックネームを入力してください <span class='label label-danger'>必須</span></label>" +
-		"<input type='text' id='sessionInput' class='form-control' placeholder='Nick Name' required='true' autofocus=''>" +
+		"<input type='text' id='sessionInput' class='form-control' placeholder='ニックネームを入力' required='true' autofocus=''>" +
 		"</div>" +
-		"<button class='btn btn-lg btn-primary btn-block' type='submit'>Go</button>" +
+		"<button class='btn btn-lg btn-primary btn-block' type='submit'>入場</button>" +
 		"</form>" +
 		"</div>" +
 		"</div>" +
@@ -52,7 +53,7 @@ function championWaiting(){
         "<div class='row'>" +
         "<div id='battleArea'>" +
         "<div class='col-md-4 col-md-offset-1'>" +
-        "<h3 id='localTitle'>チャンピオン: </h3>" +
+        "<h3 id='localTitle'>" + CHAMPION + ": </h3>" +
         "<div id='localVideoArea' class='media'></div>" +
         "</div>" +
         "<div class='col-md-2'>" +
@@ -60,7 +61,7 @@ function championWaiting(){
         "<h4 id='status'></h4>" +
         "</div>" +
         "<div class='col-md-4' id='remoteArea'>" +
-        "<h3 id='remoteTitle'>挑戦者: </h3>" +
+        "<h3 id='remoteTitle'>" + CHALLENGER + ": </h3>" +
         "<div id='remotes' class='media'></div>" +
         "</div>" +
         "</div>" +
@@ -100,7 +101,7 @@ function championWaiting(){
         "</div>" +
         "</div>" +
         "<canvas id='battleCanvas'></canvas>" +
-        "<img id='screenShot' src=''></img>" +
+        "<img id='screenShot' src='' />" +
         "<input type='hidden' value='' id='hostId'>" +
         "<input type='hidden' value='' id='visitorId'>" +
 		"<hr>" +

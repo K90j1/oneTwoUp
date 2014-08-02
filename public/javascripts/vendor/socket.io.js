@@ -2229,6 +2229,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
         break;
 
       case 'message':
+          this.$emit('news', { hello: 'world' });
       case 'json':
         var params = ['message', packet.data];
 
