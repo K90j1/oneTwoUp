@@ -255,6 +255,7 @@ function _countDown(role) {
 
 function _snapShot2() {
     var imgSrc = jQuery('#localVideo')[0];
+    console.log(imgSrc);
     console.log('_snapShot2');
     //@todo add effect about white out
     var battleCanvas = jQuery('#battleCanvas');
