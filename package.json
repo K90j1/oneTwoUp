@@ -1,17 +1,18 @@
 {
-  "name": "nko4-routeflags",
-  "version": "0.0.0",
-  "description": "routeFlags",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "socket.io": "*",
-    "express": "~4.0.0",
-    "nko": "*"
-  },
-  "engines": {
-    "node": "0.10.x"
-  }
+    "name": "nko4-routeflags",
+    "version": "0.0.0",
+    "description": "routeFlags",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "socket.io": "*",
+        "express": "~4.0.0",
+        "static-favicon": "*",
+        "nko": "*"
+    },
+    "engines": {
+        "node": "0.10.x"
+    }
 }
