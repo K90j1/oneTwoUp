@@ -11,6 +11,11 @@
         "express": "~4.0.0",
         "static-favicon": "*",
         "morgan": "*",
+        "body-parser": "*",
+        "cookie-parser": "*",
+        "debug": "*",
+        "jade": "*",
+        "stylus": "*",
         "nko": "*"
     },
     "engines": {
