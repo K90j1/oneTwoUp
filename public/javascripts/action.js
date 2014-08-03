@@ -14,7 +14,6 @@ var webrtc = new SimpleWebRTC({
     debug: true,
     detectSpeakingEvents: false,
     autoAdjustMic: true
-//    url: 'http://routeflags.2013.nodeknockout.com:8888'
 });
 
 var CHALLENGER = "挑戦者";
