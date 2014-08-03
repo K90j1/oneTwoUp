@@ -49,8 +49,6 @@ function fbGetLoginStatus() {
  *
  */
 function postFeed(displayMes, link, picPath) {
-//	picPath = 'http://verygood.li/fbapp/images/' + picNm + '.png';
-
 	FB.api('/me/feed'
 		, 'post'
 		, { access_token: res_access_token, name: 'ONE,TWO,UP!!', message: displayMes, picture: picPath, link: link, description: 'This game for nko4, challenge it ?'}

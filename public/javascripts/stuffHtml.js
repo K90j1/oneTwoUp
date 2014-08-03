@@ -15,7 +15,7 @@ function championLoginForm(){
 		"</h1>" +
 		"</div>" +
 		"</div>" +
-		"<div class='row'>" +
+		"<div class=\"row\">\n    <div class=\"col-md-9 col-md-offset-2\">\n        <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n        <!-- generator -->\n        <ins class=\"adsbygoogle\"\n             style=\"display:inline-block;width:250px;height:250px\"\n             data-ad-client=\"ca-pub-6004984342861741\"\n             data-ad-slot=\"7259625202\"></ins>\n        <script>\n            (adsbygoogle = window.adsbygoogle || []).push({});\n        </script>\n        <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n        <!-- generator -->\n        <ins class=\"adsbygoogle\"\n             style=\"display:inline-block;width:250px;height:250px\"\n             data-ad-client=\"ca-pub-6004984342861741\"\n             data-ad-slot=\"7259625202\"></ins>\n        <script>\n            (adsbygoogle = window.adsbygoogle || []).push({});\n        </script>\n        <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n        <!-- generator -->\n        <ins class=\"adsbygoogle\"\n             style=\"display:inline-block;width:250px;height:250px\"\n             data-ad-client=\"ca-pub-6004984342861741\"\n             data-ad-slot=\"7259625202\"></ins>\n        <script>\n            (adsbygoogle = window.adsbygoogle || []).push({});\n        </script>\n    </div>\n</div>\n<div class=\'row\'>" +
 		"<div class='col-md-6 col-md-offset-3'>" +
 		"<form id='createRoom'>" +
 		"<h2 class='form-signin-heading'><i class='fa fa-globe'></i> ゲームをはじめます</h2>" +
@@ -37,6 +37,10 @@ function championLoginForm(){
 		"COPYRIGHT 2013 routeFlags.inc All RIGHTS RESERVED.";
 }
 
+/**
+ * Stuff for Second Page
+ * @return String
+ */
 function championWaiting(){
 	return "<div class='row'>" +
         "<div class='page-header'>" +
@@ -53,7 +57,7 @@ function championWaiting(){
         "<div class='row'>" +
         "<div id='battleArea'>" +
         "<div class='col-md-4 col-md-offset-1'>" +
-        "<h3 id='localTitle'>" + CHAMPION + ": </h3>" +
+        "<h3 id='localTitle'>" + CHAMPION + " </h3>" +
         "<div id='localVideoArea' class='media'></div>" +
         "</div>" +
         "<div class='col-md-2'>" +
@@ -61,7 +65,7 @@ function championWaiting(){
         "<h4 id='status'></h4>" +
         "</div>" +
         "<div class='col-md-4' id='remoteArea'>" +
-        "<h3 id='remoteTitle'>" + CHALLENGER + ": </h3>" +
+        "<h3 id='remoteTitle'>" + CHALLENGER + " </h3>" +
         "<div id='remotes' class='media'></div>" +
         "</div>" +
         "</div>" +
@@ -90,7 +94,7 @@ function championWaiting(){
         "<a class='btn btn-default btn-danger arrow' name='left'>LEFT</a>" +
         "</div>" +
         "</div>" +
-        "</div>" +
+        "</div>\n<div class=\"row\">\n    <div class=\"col-md-9 col-md-offset-2\">\n        <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n        <!-- generator -->\n        <ins class=\"adsbygoogle\"\n             style=\"display:inline-block;width:250px;height:250px\"\n             data-ad-client=\"ca-pub-6004984342861741\"\n             data-ad-slot=\"7259625202\"></ins>\n        <script>\n            (adsbygoogle = window.adsbygoogle || []).push({});\n        </script>\n        <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n        <!-- generator -->\n        <ins class=\"adsbygoogle\"\n             style=\"display:inline-block;width:250px;height:250px\"\n             data-ad-client=\"ca-pub-6004984342861741\"\n             data-ad-slot=\"7259625202\"></ins>\n        <script>\n            (adsbygoogle = window.adsbygoogle || []).push({});\n        </script>\n        <script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n        <!-- generator -->\n        <ins class=\"adsbygoogle\"\n             style=\"display:inline-block;width:250px;height:250px\"\n             data-ad-client=\"ca-pub-6004984342861741\"\n             data-ad-slot=\"7259625202\"></ins>\n        <script>\n            (adsbygoogle = window.adsbygoogle || []).push({});\n        </script>\n    </div>\n</div>" +
         "<div id='scene'>" +
         "<div id='finger' class='cube finger'>" +
         "<div class='face tp'></div>" +

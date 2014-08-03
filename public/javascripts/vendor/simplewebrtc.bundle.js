@@ -166,7 +166,7 @@ SimpleWebRTC.prototype.handlePeerStreamAdded = function (peer) {
     if (container) container.appendChild(video);
 
     //2013.11.10
-    videoCasting();
+    _videoCasting();
 
     this.emit('videoAdded', video, peer);
 };
@@ -178,7 +178,7 @@ SimpleWebRTC.prototype.handlePeerStreamRemoved = function (peer) {
         container.removeChild(videoEl);
     }
     if (videoEl) this.emit('videoRemoved', videoEl, peer);
-    showResult();
+    _showResult();
 };
 
 SimpleWebRTC.prototype.getDomId = function (peer) {
@@ -239,6 +239,7 @@ SimpleWebRTC.prototype.startLocalVideo = function () {
             self.emit(err);
         } else {
             attachMediaStream(stream, self.getLocalVideoContainer(), {muted: true, mirror: true});
+            console.dir(self.getLocalVideoContainer());
         }
     });
 };
@@ -252,6 +253,7 @@ SimpleWebRTC.prototype.stopLocalVideo = function () {
 // that will be used to put the video tag into.
 SimpleWebRTC.prototype.getLocalVideoContainer = function () {
     var el = this.getEl(this.config.localVideoEl);
+
     if (el && el.tagName === 'VIDEO') {
         return el;
     } else if (el) {

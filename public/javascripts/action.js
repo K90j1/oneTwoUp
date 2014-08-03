@@ -15,13 +15,13 @@ var webrtc = new SimpleWebRTC({
     detectSpeakingEvents: false,
     autoAdjustMic: true
 });
-
-var CHALLENGER = "挑戦者";
-var CHAMPION = "王者";
+var CHALLENGER = "挑戦者:";
+var CHAMPION = "王者:";
 var ALERT = "カメラの利用を許可してください";
+var ANSWER_MES = "結果は、";
 var arrow;
-
 var urlPrams = location.search && location.search.split('?')[1];
+
 // for Challenger
 if (urlPrams.split('&')[1] == 'token') {
     // Challenger is coming
@@ -36,11 +36,10 @@ if (urlPrams.split('&')[1] == 'token') {
             alert(ALERT);
             return false;
         }
-        var val = jQuery('#sessionInput').val().toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
-        webrtc.createRoom(val, function (err, name) {
-            var storeData = {hostId: webrtc.connection.socket.sessionid, name: name};
+        var roomName = jQuery('#sessionInput').val().toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
+        webrtc.createRoom(roomName, function (err, name) {
+            var storeData = {roomName: name};
             localStorage['storeChampion'] = JSON.stringify(storeData);
-            console.log(' create room cb', arguments);
             if (!err) {
                 _setRoom(name);
             } else {
@@ -60,66 +59,6 @@ if (urlPrams.split('&')[1] == 'token') {
     _mute();
 }
 
-
-function videoCasting() {
-    if (!localStorage['storeChampion']) {
-        return;
-    }
-    var arrowArea = jQuery('#arrowArea');
-    arrowArea.css('display', 'block');
-    var localVideo = jQuery('#localVideo');
-    localVideo.css('display', 'block');
-    jQuery('#alert').css('display', 'none');
-    webrtc.on('message', function(data){
-        if(data.nickName){
-            jQuery('#localTitle').text(CHALLENGER + ' ' + data.nickName);
-        }
-        if(data.arrow){
-            _countDown(1)
-        }
-        console.dir(data);
-    });
-
-    // Challenger
-    if (location.search.split('?')[1]) {
-        console.log('08 - Load challengerVideoCasting');
-        _mute();
-        jQuery('#battleArea').css('display', 'block');
-        jQuery('#tutorial').css('display', 'none');
-        console.dir(localStorage['storeChallenger']);
-        var nickName = JSON.parse(localStorage['storeChallenger']).nickName;
-        jQuery('#localTitle').text(CHALLENGER + ' ' + nickName);
-        jQuery('#remoteTitle').text(CHAMPION + ' ' + JSON.parse(localStorage['storeChallenger']).roomName);
-        localVideo.load();
-        arrowArea.css('display', 'none');
-        jQuery('#waitingMessage').html(CHAMPION + ' ' + JSON.parse(localStorage['storeChallenger']).roomName + ' が準備中...<i class="fa fa-refresh fa-spin"></i>');
-        webrtc.webrtc.sendToAll('message', {nickName:nickName});
-        return;
-    }
-    // Champion
-    _mute();
-    console.log('03 - Load VideoCasting');
-    jQuery('#functionality').fadeOut("slow", function () {
-        jQuery('#functionality').css('display', 'none');
-    });
-    jQuery('#tutorial').css('display', 'none');
-    var message = "UP, RIGHT, DOWN, LEFTからひとつ選んでください";
-    jQuery('#waitingMessage').html(message);
-    jQuery('#localTitle').text(CHALLENGER + ' ');
-    jQuery('#remoteTitle').text(CHAMPION + ' ' + JSON.parse(localStorage['storeChampion']).name);
-
-    jQuery('.arrow').click(function () {
-        console.log(jQuery(this).attr('name'));
-        arrow = jQuery(this).attr('name');
-        console.log('05 - Result (will be here disp of judge)');
-        //@todo add arrow on remote video
-        webrtc.webrtc.sendToAll('message', {arrow: arrow});
-    });
-    _callLeapMotion();
-}
-
-
-// Since we use this twice we put it here
 function _setRoom(name) {
     // Champion
     console.log('02 - Load championWaiting()');
@@ -172,6 +111,66 @@ function _setRoomChallenger() {
     return true;
 }
 
+
+function _videoCasting() {
+    webrtc.on('message', function (data) {
+        if (data.nickName) {
+            jQuery('#localTitle').text(CHALLENGER + ' ' + data.nickName);
+        }
+        if (data.arrow) {
+            arrow = data.arrow;
+            jQuery('#waitingMessage').html(CHAMPION + ' ' + JSON.parse(localStorage['storeChallenger']).roomName + ' が方向をセットしました！？　上下左右を向いてください');
+            _countDown(0)
+        }
+        console.dir(data);
+    });
+    if (!localStorage['storeChampion']) {
+        return;
+    }
+    var arrowArea = jQuery('#arrowArea');
+    arrowArea.css('display', 'block');
+    var localVideo = jQuery('#localVideo');
+    localVideo.css('display', 'block');
+    jQuery('#alert').css('display', 'none');
+    // Challenger
+    if (location.search.split('?')[1]) {
+        console.log('08 - Load challengerVideoCasting');
+        _mute();
+        jQuery('#battleArea').css('display', 'block');
+        jQuery('#tutorial').css('display', 'none');
+        console.dir(localStorage['storeChallenger']);
+        var nickName = JSON.parse(localStorage['storeChallenger']).nickName;
+        jQuery('#localTitle').text(CHALLENGER + ' ' + nickName);
+        jQuery('#remoteTitle').text(CHAMPION + ' ' + JSON.parse(localStorage['storeChallenger']).roomName);
+        localVideo.load();
+        arrowArea.css('display', 'none');
+        jQuery('#waitingMessage').html(CHAMPION + ' ' + JSON.parse(localStorage['storeChallenger']).roomName + ' が準備中...<i class="fa fa-refresh fa-spin"></i>');
+        webrtc.webrtc.sendToAll('message', {nickName: nickName});
+        return;
+    }
+    // Champion
+    _mute();
+    console.log('03 - Load VideoCasting');
+    jQuery('#functionality').fadeOut("slow", function () {
+        jQuery('#functionality').css('display', 'none');
+    });
+    jQuery('#tutorial').css('display', 'none');
+    var message = "UP, RIGHT, DOWN, LEFTからひとつ選んでください";
+    jQuery('#waitingMessage').html(message);
+    jQuery('#localTitle').text(CHALLENGER + ' ');
+    jQuery('#remoteTitle').text(CHAMPION + ' ' + JSON.parse(localStorage['storeChampion']).roomName);
+
+    jQuery('.arrow').click(function () {
+        console.log(jQuery(this).attr('name'));
+        arrow = jQuery(this).attr('name');
+        console.log('05 - Result (will be here disp of judge)');
+        //@todo add arrow on remote video
+        webrtc.webrtc.sendToAll('message', {arrow: arrow});
+        _countDown(1)
+    });
+    _callLeapMotion();
+}
+
 // Champion
 function _snapShot() {
     console.log('_snapShot');
@@ -179,11 +178,14 @@ function _snapShot() {
     var battleCanvas = jQuery('#battleCanvas');
     battleCanvas.attr('width', 640);
     battleCanvas.attr('height', 480);
-
     var canvasCtx = jQuery('#battleCanvas')[0].getContext('2d');
     canvasCtx.drawImage(jQuery('#remotes video')[0], 0, 0);
     jQuery('#screenShot').attr('src', battleCanvas[0].toDataURL('image/png'));
-//    document.getElementById("huhu").src = canvas.toDataURL('image/webp');
+    var arrowArea = document.getElementById('arrowArea');
+    arrowArea.parentNode.removeChild(arrowArea);
+    jQuery('#waitingMessage').html('');
+
+    setResultArrow();
 }
 
 function _countDown(role) {
@@ -220,7 +222,6 @@ function _countDown(role) {
                                                                         if (role == 1) {
                                                                             status.fadeOut("slow", function () {
                                                                                 _snapShot();
-                                                                                // disabled
                                                                                 jQuery('#waitingMessage').text('SCREEN SHOT!!!');
                                                                                 setTimeout(function () {
 //                                                                                    location.href = jQuery('#screenShot').attr('src');
@@ -254,40 +255,45 @@ function _countDown(role) {
 
 
 function _snapShot2() {
-    var imgSrc = jQuery('#localVideo')[0];
-    console.log(imgSrc);
-    console.log('_snapShot2');
     //@todo add effect about white out
     var battleCanvas = jQuery('#battleCanvas');
     battleCanvas.attr('width', 640);
     battleCanvas.attr('height', 480);
-
     var canvasCtx = battleCanvas[0].getContext('2d');
     canvasCtx.drawImage(jQuery('#localVideo')[0], 0, 0);
     jQuery('#screenShot').attr('src', battleCanvas[0].toDataURL('image/png'));
+    jQuery('#waitingMessage').html('');
+    setResultArrow();
+}
+
+function setResultArrow(){
+    var videoArea = document.getElementById('localVideo');
+    videoArea.parentNode.removeChild(videoArea);
+    var remoteVideoArea = document.getElementById('remotes');
+    remoteVideoArea.parentNode.removeChild(remoteVideoArea);
     switch (arrow) {
         case 'top':
             jQuery('#battleArea').html('' +
                 '<div class="alert alert-info">' +
-                '<h3>Answer is <i class="fa-arrow-circle-o-up bigIcon"></h3>' +
+                '<h3>' + ANSWER_MES + ' <i class="fa fa-arrow-circle-o-up fa-4x"></i></h3>' +
                 '</div>');
             break;
         case 'right':
             jQuery('#battleArea').html('' +
                 '<div class="alert alert-info">' +
-                '<h3>Answer is <i class="fa-arrow-circle-o-right bigIcon"></h3>' +
+                '<h3>' + ANSWER_MES + ' <i class="fa fa-arrow-circle-o-right fa-4x"></i></h3>' +
                 '</div>');
             break;
         case 'left':
             jQuery('#battleArea').html('' +
                 '<div class="alert alert-info">' +
-                '<h3>Answer is <i class="fa-arrow-circle-o-left bigIcon"></h3>' +
+                '<h3>' + ANSWER_MES + ' <i class="fa fa-arrow-circle-o-left fa-4x"></i></h3>' +
                 '</div>');
             break;
         case 'bottom':
             jQuery('#battleArea').html('' +
                 '<div class="alert alert-info">' +
-                '<h3>Answer is <i class="fa-arrow-circle-o-down bigIcon"></h3>' +
+                '<h3>' + ANSWER_MES + ' <i class="fa fa-arrow-circle-o-down fa-4x"></i></h3>' +
                 '</div>');
             break;
         default :
@@ -295,10 +301,9 @@ function _snapShot2() {
     }
 }
 
-function showResult() {
+function _showResult() {
     _countDown(2);
     jQuery('#waitingMessage').text('SCREEN SHOT!!');
-    webrtc.stopLocalVideo();
 //
 //    jQuery('#battleArea').html("<button class='btn btn-07' type='submit' id='postFb'>" +
 //        "<i class='fa fa-facebook-square'></i> | Post to Facebook</button>");
@@ -357,7 +362,7 @@ function moveFinger(Finger, posX, posY, posZ, dirX, dirY, dirZ) {
 }
 
 function _mute() {
-    webrtc.mute();
+//    webrtc.mute();
 }
 
 
