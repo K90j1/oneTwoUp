@@ -80,8 +80,10 @@ function championWaiting(){
         "<p>5. もしあなたのトラップにチャレンジャーが引っかかったらあなたはスクリーンショットを手にできます (開発中...)</p>" +
         "<div id='invite'><h4>紹介URL</h4>" +
         "<div class='well' id='url'></div>" +
-        "<button class='btn btn-facebook' type='submit' id='facebook'>" +
+        "調整中(ノД`)・゜・<br><button class='btn btn-facebook' type='submit' id='facebook'>" +
         "<i class='fa fa-facebook-square'></i> FacebookにURLを投稿する</button>" +
+        "<button class='btn btn-twitter' type='submit' id='twitter'>" +
+        "<i class='fa fa-twitter-square'></i> TwitterにURLを投稿する</button>" +
         "</div>" +
         "</div>" +
         "</div>" +

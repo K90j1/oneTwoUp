@@ -84,6 +84,8 @@ function _setRoom(name) {
         fbLogin();
         postFeed('This game for nko4, challenge it ?', linkUrl, imgSrc);
     });
+    jQuery('#twitter').click(function () {
+    });
     return true;
 }
 
