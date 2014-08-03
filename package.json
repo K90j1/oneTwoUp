@@ -10,6 +10,7 @@
         "socket.io": "*",
         "express": "~4.0.0",
         "static-favicon": "*",
+        "morgan": "*",
         "nko": "*"
     },
     "engines": {
