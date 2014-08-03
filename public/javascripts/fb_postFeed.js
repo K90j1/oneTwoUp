@@ -6,7 +6,7 @@ var res_access_token;
  */
 function fbLogin() {
 	FB.init({
-		appId: '628717840508281',
+		appId: '515770788569378',
 		status: true,
 		cookie: true,
 		xfbml: true
@@ -51,7 +51,7 @@ function fbGetLoginStatus() {
 function postFeed(displayMes, link, picPath) {
 	FB.api('/me/feed'
 		, 'post'
-		, { access_token: res_access_token, name: 'ONE,TWO,UP!!', message: displayMes, picture: picPath, link: link, description: 'This game for nko4, challenge it ?'}
+		, { access_token: res_access_token, name: 'P2Pであっち向いてホイッ！！', message: displayMes, picture: picPath, link: link, description: 'P2Pのビデオキャストゲームです☆'}
 		, function (response) {
 			if (!response || response.error) {
 				console.dir(response.error);
