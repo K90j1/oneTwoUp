@@ -10,8 +10,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ジェスチャーゲーム「あっち向いてホイ！！」</title>
-    <meta name="description" content="">
+    <title>WebRTC技術を使ったP2Pゲーム「あっち向いてホイ」</title>
+    <meta name="description" content="WebRTC技術を使ったP2Pゲーム「あっち向いてホイ」">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="stylesheet" href="stylesheets/normalize.css">
@@ -35,7 +35,49 @@
             このアプリケーションは、ビデオ通信にWebRTCを使ってるので Google chrome を利用してください
         </div>
     </div>
+    <div class="row" id="relation">
+        <div class="col-md-10 col-md-offset-1">
+            <h3>リレーション</h3>
+        </div>
+        <div class="col-md-10 col-md-offset-1 top5">
+            <h4><a href="http://html5boilerplate.com/">HTML5 Boilerplate</a></h4>
+            <p>HTML5 Boilerplate helps you build fast, robust, and adaptable web apps or sites.</p>
+            <h4><a href="http://simplewebrtc.com/">simpleWebRTC</a></h4>
+            <p>You can build cool stuff with WebRTC in five minutes.</p>
+            <h4><a href="https://github.com/andyet/signalmaster">Signalmaster</a></h4>
+            <p>A simple signaling server for clients to connect and do signaling for WebRTC.</p>
+            <h4><a href="https://github.com/henrikjoreteg/webrtc.js">webrtc.js</a></h4>
+            <p>A helper for creating and managing WebRTC connections in a cross-browser sort of way</p>
+            <h4><a href="https://github.com/henrikjoreteg/rtcpeerconnection">RTCPeerConnection</a></h4>
+            <p>A tiny browser module that gives normalizes and simplifies the API for WebRTC peer connections.</p>
+            <h4><a href="https://github.com/HenrikJoreteg/getUserMedia">getUserMedia</a></h4>
+            <p>Cross-browser getUserMedia shim with a node.js style error-first API</p>
+            <h4><a href="https://github.com/HenrikJoreteg/attachMediaStream">attachMediaStream</a></h4>
+            <p>Simple abstraction for handling differences between browsers for attaching a media stream to a video element</p>
+            <h4><a href="https://github.com/HenrikJoreteg/webrtcsupport">webrtcsupport</a></h4>
+            <p>Browser module to detect support for WebRTC and extract proper constructors./p>
+            <h4><a href="https://github.com/HenrikJoreteg/getScreenMedia">getScreenMedia</a></h4>
+            <p>A browser module for attempting to get access to a MediaStream of a user's screen. With a nice node-like API</p>
+            <h4><a href="https://github.com/HenrikJoreteg/mediastream-gain">mediastream-gain</a></h4>
+            <p>A tiny browser module for creating a gain/volume controller for the audio channels in a MediaStream.</p>
+            <h4><a href="https://github.com/HenrikJoreteg/wildemitter">WildEmitter</a></h4>
+            <p>A super lightweight EventEmitter similar to what comes in Node.js, but with a support for wildcard events</p>
+            <h4><a href="https://github.com/otalk/hark">hark</a></h4>
+            <p>Converts an audio stream to speech events in the browser</p>
+            <h4><a href="http://simplewebrtc.com/">Signaling server</a></h4>
+            <p>SimpleWebRTC.com</p>
+            <h4><a href="http://google.com">TURN and STUN server</a></h4>
+            <p>google.com</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <hr>
+            COPYRIGHT 2014 routeFlags.inc All RIGHTS RESERVED.
+        </div>
+    </div>
 </div>
+<a href="https://github.com/K90j1/oneTwoUp"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 <script src="javascripts/plugins.js"></script>
 <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
 <script>window.jQuery || document.write('<script src="javascripts/vendor/jquery-2.1.0.min.js"><\/script>')</script>
@@ -50,7 +92,15 @@
 <script src="javascripts/fb_postFeed.js"></script>
 <script src="javascripts/stuffHtml.js"></script>
 <script src="javascripts/action.js"></script>
+<script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 <script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=515770788569378&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
     !function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (!d.getElementById(id)) {

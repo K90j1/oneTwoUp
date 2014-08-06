@@ -448,5 +448,4 @@ function _callLeapMotion() {
             }
         }
     });
-
 }
