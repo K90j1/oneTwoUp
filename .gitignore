@@ -5,6 +5,7 @@ oneTwoUp.iml
 setup.sh
 fakekeys
 doc
+out
 
 # Logs
 logs

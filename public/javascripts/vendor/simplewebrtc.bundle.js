@@ -63,7 +63,6 @@ function SimpleWebRTC(opts) {
     });
 
     connection.on('message', function (message) {
-        console.dir(message);
         var peers = self.webrtc.getPeers(message.from, message.roomType);
         var peer;
 
@@ -80,7 +79,6 @@ function SimpleWebRTC(opts) {
             peer.handleMessage(message);
         } else if (peers.length) {
             peers.forEach(function (peer) {
-                console.dir(message);
                 peer.handleMessage(message);
             });
         }
@@ -89,7 +87,6 @@ function SimpleWebRTC(opts) {
     connection.on('remove', function (room) {
         if (room.id !== self.connection.socket.sessionid) {
             self.webrtc.removePeers(room.id, room.type);
-            console.log('remove');
         }
     });
 
@@ -165,9 +162,6 @@ SimpleWebRTC.prototype.handlePeerStreamAdded = function (peer) {
 
     if (container) container.appendChild(video);
 
-    //2013.11.10
-    _videoCasting();
-
     this.emit('videoAdded', video, peer);
 };
 
@@ -178,7 +172,6 @@ SimpleWebRTC.prototype.handlePeerStreamRemoved = function (peer) {
         container.removeChild(videoEl);
     }
     if (videoEl) this.emit('videoRemoved', videoEl, peer);
-    _showResult();
 };
 
 SimpleWebRTC.prototype.getDomId = function (peer) {
@@ -199,6 +192,7 @@ SimpleWebRTC.prototype.joinRoom = function (name, cb) {
         if (err) {
             self.emit('error', err);
         } else {
+            // 2014.8.5
             var count = 0;
             var id,
                 client,
@@ -239,7 +233,6 @@ SimpleWebRTC.prototype.startLocalVideo = function () {
             self.emit(err);
         } else {
             attachMediaStream(stream, self.getLocalVideoContainer(), {muted: true, mirror: true});
-            console.dir(self.getLocalVideoContainer());
         }
     });
 };
@@ -370,7 +363,7 @@ module.exports = SimpleWebRTC;
 
 },{"attachmediastream":4,"getscreenmedia":6,"mockconsole":7,"webrtc":2,"webrtcsupport":5,"wildemitter":3}],3:[function(require,module,exports){
 /*
-WildEmitter.js is a slim little event emitter by @henrikjoreteg largely based 
+WildEmitter.js is a slim little event emitter by @henrikjoreteg largely based
 on @visionmedia's Emitter from UI Kit.
 
 Why? I wanted it standalone.
@@ -378,14 +371,14 @@ Why? I wanted it standalone.
 I also wanted support for wildcard emitters like this:
 
 emitter.on('*', function (eventName, other, event, payloads) {
-    
+
 });
 
 emitter.on('somenamespace*', function (eventName, payloads) {
-    
+
 });
 
-Please note that callbacks triggered by wildcard registered events also get 
+Please note that callbacks triggered by wildcard registered events also get
 the event name as the first argument.
 */
 module.exports = WildEmitter;
@@ -397,7 +390,7 @@ function WildEmitter() {
 // Listen on the given `event` with `fn`. Store a group name if present.
 WildEmitter.prototype.on = function (event, groupName, fn) {
     var hasGroup = (arguments.length === 3),
-        group = hasGroup ? arguments[1] : undefined, 
+        group = hasGroup ? arguments[1] : undefined,
         func = hasGroup ? arguments[2] : arguments[1];
     func._groupName = group;
     (this.callbacks[event] = this.callbacks[event] || []).push(func);
@@ -409,7 +402,7 @@ WildEmitter.prototype.on = function (event, groupName, fn) {
 WildEmitter.prototype.once = function (event, groupName, fn) {
     var self = this,
         hasGroup = (arguments.length === 3),
-        group = hasGroup ? arguments[1] : undefined, 
+        group = hasGroup ? arguments[1] : undefined,
         func = hasGroup ? arguments[2] : arguments[1];
     function on() {
         self.off(event, on);
@@ -426,7 +419,6 @@ WildEmitter.prototype.releaseGroup = function (groupName) {
         handlers = this.callbacks[item];
         for (i = 0, len = handlers.length; i < len; i++) {
             if (handlers[i]._groupName === groupName) {
-                //console.log('removing');
                 // remove it and shorten the array we're looping through
                 handlers.splice(i, 1);
                 i--;
@@ -442,7 +434,7 @@ WildEmitter.prototype.releaseGroup = function (groupName) {
 WildEmitter.prototype.off = function (event, fn) {
     var callbacks = this.callbacks[event],
         i;
-    
+
     if (!callbacks) return this;
 
     // remove all handlers
@@ -857,8 +849,6 @@ WebRTC.prototype.startLocalMedia = function (mediaConstraints, cb) {
     getUserMedia(constraints, function (err, stream) {
         if (!err) {
             if (constraints.audio && self.config.detectSpeakingEvents) {
-	            //2013.11.9
-//                self.setupAudioMonitor(stream);
             }
             self.localStream = stream;
 
@@ -1056,8 +1046,6 @@ Peer.prototype = Object.create(WildEmitter.prototype, {
 });
 
 Peer.prototype.handleMessage = function (message) {
-    console.log(message.type);
-    console.dir(message.payload);
     var self = this;
 
     this.logger.log('getting', message.type, message);
@@ -1076,6 +1064,7 @@ Peer.prototype.handleMessage = function (message) {
         this.parent.emit('speaking', {id: message.from});
     } else if (message.type === 'stopped_speaking') {
         this.parent.emit('stopped_speaking', {id: message.from});
+        //2014.8.5
     } else if (message.type === 'message') {
         this.parent.emit('message', message.payload);
     }};

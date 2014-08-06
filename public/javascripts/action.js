@@ -3,6 +3,12 @@
  * Date: 11/9/13
  * License: Under Apache License, Version 2.0.
  */
+var CHALLENGER = "挑戦者:";
+var CHAMPION = "王者:";
+var ALERT = "カメラの利用を許可してください";
+var ANSWER_MES = "結果は、";
+var arrow;
+var urlPrams = location.search && location.search.split('?')[1];
 
 var webrtc = new SimpleWebRTC({
     // the id/element dom element that will hold "our" video
@@ -15,20 +21,14 @@ var webrtc = new SimpleWebRTC({
     detectSpeakingEvents: false,
     autoAdjustMic: true
 });
-var CHALLENGER = "挑戦者:";
-var CHAMPION = "王者:";
-var ALERT = "カメラの利用を許可してください";
-var ANSWER_MES = "結果は、";
-var arrow;
-var urlPrams = location.search && location.search.split('?')[1];
 
 // for Challenger
 if (urlPrams.split('&')[1] == 'token') {
     // Challenger is coming
     location.href = location.origin + '/challenger.html';
-    localStorage['storeEntryChallenger'] = JSON.stringify({roomName: urlPrams.split('&')[0], token: 'token'});
+    sessionStorage['storeEntryChallenger'] = JSON.stringify({roomName: urlPrams.split('&')[0], token: 'token'});
 // for Champion
-} else if (!localStorage['storeEntryChallenger']) {
+} else if (!sessionStorage['storeEntryChallenger']) {
     jQuery("#workArea").append(championLoginForm());
     console.log('01 - Load championLoginForm()');
     jQuery('form').submit(function () {
@@ -38,8 +38,7 @@ if (urlPrams.split('&')[1] == 'token') {
         }
         var roomName = jQuery('#sessionInput').val().toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
         webrtc.createRoom(roomName, function (err, name) {
-            var storeData = {roomName: name};
-            localStorage['storeChampion'] = JSON.stringify(storeData);
+            sessionStorage['storeChampion'] = JSON.stringify({roomName: name});
             if (!err) {
                 _setRoom(name);
             } else {
@@ -49,12 +48,12 @@ if (urlPrams.split('&')[1] == 'token') {
         return false;
     });
 // for Challenger
-} else if (localStorage['storeChallenger']) {
-    localStorage.removeItem('storeEntryChallenger');
-    var storeChallenger = JSON.parse(localStorage['storeChallenger']);
+} else if (sessionStorage['storeChallenger']) {
+    sessionStorage.removeItem('storeEntryChallenger');
+    var storeChallenger = JSON.parse(sessionStorage['storeChallenger']);
     _setRoomChallenger();
     webrtc.on('readyToCall', function () {
-        webrtc.joinRoom(JSON.parse(localStorage['storeChallenger']).roomName);
+        webrtc.joinRoom(JSON.parse(sessionStorage['storeChallenger']).roomName);
     });
     _mute();
 }
@@ -78,6 +77,12 @@ function _setRoom(name) {
             jQuery('#functionality').css('display', 'none');
         });
     }, 3000);
+    webrtc.on('videoAdded', function (data) {
+        _videoCasting();
+    });
+    webrtc.on('videoRemoved', function (data) {
+        _showResult();
+    });
     jQuery('#facebook').click(function () {
         var linkUrl = location.href + '&token';
         var imgSrc = 'https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-frc3/p480x480/1394195_10201139872958743_665625604_n.jpg';
@@ -86,6 +91,7 @@ function _setRoom(name) {
     });
     jQuery('#twitter').click(function () {
     });
+
     return true;
 }
 
@@ -107,50 +113,20 @@ function _setRoomChallenger() {
         "<div class='panel-body'>" +
         "<i class='fa fa-video-camera'></i> " + ALERT +
         "<br><small>ゲームが始まりませんか？もしかしたらホストはどこかに行ってしまったかもしれないです　" +
-        "<a href='http://routeflags.2013.nodeknockout.com/'>再スタートはこちら</a></small>" +
+        "<a href='http://onetwoup-node.herokuapp.com/'>再スタートはこちら</a></small>" +
         "</div>" +
         "</div>");
-    return true;
+    webrtc.on('videoAdded', function (data) {
+        _videoCastingChallenger();
+    });
+    webrtc.on('videoRemoved', function (data) {
+        _showResult();
+    });
 }
 
 
 function _videoCasting() {
-    webrtc.on('message', function (data) {
-        if (data.nickName) {
-            jQuery('#localTitle').text(CHALLENGER + ' ' + data.nickName);
-        }
-        if (data.arrow) {
-            arrow = data.arrow;
-            jQuery('#waitingMessage').html(CHAMPION + ' ' + JSON.parse(localStorage['storeChallenger']).roomName + ' が方向をセットしました！？　上下左右を向いてください');
-            _countDown(0)
-        }
-        console.dir(data);
-    });
-    if (!localStorage['storeChampion']) {
-        return;
-    }
-    var arrowArea = jQuery('#arrowArea');
-    arrowArea.css('display', 'block');
-    var localVideo = jQuery('#localVideo');
-    localVideo.css('display', 'block');
-    jQuery('#alert').css('display', 'none');
-    // Challenger
-    if (location.search.split('?')[1]) {
-        console.log('08 - Load challengerVideoCasting');
-        _mute();
-        jQuery('#battleArea').css('display', 'block');
-        jQuery('#tutorial').css('display', 'none');
-        console.dir(localStorage['storeChallenger']);
-        var nickName = JSON.parse(localStorage['storeChallenger']).nickName;
-        jQuery('#localTitle').text(CHALLENGER + ' ' + nickName);
-        jQuery('#remoteTitle').text(CHAMPION + ' ' + JSON.parse(localStorage['storeChallenger']).roomName);
-        localVideo.load();
-        arrowArea.css('display', 'none');
-        jQuery('#waitingMessage').html(CHAMPION + ' ' + JSON.parse(localStorage['storeChallenger']).roomName + ' が準備中...<i class="fa fa-refresh fa-spin"></i>');
-        webrtc.webrtc.sendToAll('message', {nickName: nickName});
-        return;
-    }
-    // Champion
+    _readyBattle();
     _mute();
     console.log('03 - Load VideoCasting');
     jQuery('#functionality').fadeOut("slow", function () {
@@ -160,8 +136,7 @@ function _videoCasting() {
     var message = "UP, RIGHT, DOWN, LEFTからひとつ選んでください";
     jQuery('#waitingMessage').html(message);
     jQuery('#localTitle').text(CHALLENGER + ' ');
-    jQuery('#remoteTitle').text(CHAMPION + ' ' + JSON.parse(localStorage['storeChampion']).roomName);
-
+    jQuery('#remoteTitle').text(CHAMPION + ' ' + JSON.parse(sessionStorage['storeChampion']).roomName);
     jQuery('.arrow').click(function () {
         console.log(jQuery(this).attr('name'));
         arrow = jQuery(this).attr('name');
@@ -172,6 +147,45 @@ function _videoCasting() {
     });
     _callLeapMotion();
 }
+
+function _videoCastingChallenger() {
+    _readyBattle();
+    console.log('08 - Load challengerVideoCasting');
+    _mute();
+    jQuery('#battleArea').css('display', 'block');
+    jQuery('#tutorial').css('display', 'none');
+    console.dir(sessionStorage['storeChallenger']);
+    var nickName = JSON.parse(sessionStorage['storeChallenger']).nickName;
+    jQuery('#localTitle').text(CHALLENGER + ' ' + nickName);
+    jQuery('#remoteTitle').text(CHAMPION + ' ' + JSON.parse(sessionStorage['storeChallenger']).roomName);
+    jQuery('#arrowArea').load();
+    jQuery('#localVideo').css('display', 'block');
+    jQuery('#waitingMessage').html(CHAMPION + ' ' + JSON.parse(sessionStorage['storeChallenger']).roomName + ' が準備中...<i class="fa fa-refresh fa-spin"></i>');
+    webrtc.webrtc.sendToAll('message', {nickName: nickName});
+}
+
+function _readyBattle() {
+    webrtc.on('message', function (data) {
+        if (data.nickName) {
+            jQuery('#localTitle').text(CHALLENGER + ' ' + data.nickName);
+        }
+        if (data.arrow) {
+            arrow = data.arrow;
+            jQuery('#waitingMessage').html(CHAMPION + ' ' + JSON.parse(sessionStorage['storeChallenger']).roomName + ' が方向をセットしました！？　上下左右を向いてください');
+            _countDown(0)
+        }
+        console.dir(data);
+    });
+    if (!sessionStorage['storeChampion']) {
+        return;
+    }
+    var arrowArea = jQuery('#arrowArea');
+    arrowArea.css('display', 'block');
+    var localVideo = jQuery('#localVideo');
+    localVideo.css('display', 'block');
+    jQuery('#alert').css('display', 'none');
+}
+
 
 // Champion
 function _snapShot() {
@@ -268,7 +282,7 @@ function _snapShot2() {
     setResultArrow();
 }
 
-function setResultArrow(){
+function setResultArrow() {
     var videoArea = document.getElementById('localVideo');
     videoArea.parentNode.removeChild(videoArea);
     var remoteVideoArea = document.getElementById('remotes');

@@ -78,11 +78,11 @@
         <script src="javascripts/vendor/modernizr-2.6.2.min.js"></script>
         <script src="javascripts/vendor/bootstrap.js"></script>
         <script>
-            var storeChallenger = JSON.parse(localStorage['storeEntryChallenger']);
+            var storeChallenger = JSON.parse(sessionStorage['storeEntryChallenger']);
             jQuery('#greeting').text('"' + storeChallenger.roomName + '"' + ' があなたを待っています');
             var form = jQuery('form');
             form.submit(function () {
-                localStorage['storeChallenger'] = JSON.stringify({roomName: storeChallenger.roomName
+                sessionStorage['storeChallenger'] = JSON.stringify({roomName: storeChallenger.roomName
                     , nickName:jQuery('#nickname').val()});
                 location.href = location.origin + '?challenger';
                 return false;
