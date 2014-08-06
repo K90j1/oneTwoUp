@@ -109,5 +109,5 @@ function championWaiting(){
         "<input type='hidden' value='' id='hostId'>" +
         "<input type='hidden' value='' id='visitorId'>" +
 		"<hr>" +
-		"COPYRIGHT routeFlags.inc 2014";
+		"COPYRIGHT routeFlags.com 2014 All RIGHTS RESERVED.";
 }
